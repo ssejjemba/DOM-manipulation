@@ -4,7 +4,7 @@
  */
 
 // I'll declare my global variables here
-var scores, roundScores, activePlayer;
+var scores, roundScore, activePlayer;
 
 // here I assign my global variables
 scores = [0, 0];
@@ -40,7 +40,7 @@ document.getElementById('current-1').textContent = '0';
 // the first arg is the type of event
 // the second arg is the callback function that will run when the event happens
 document.querySelector('.btn-roll').addEventListener('click', function () {
-  //1. Random number
+  // 1. Random number
   // dice rolls randomly from 1 to 6
   var dice = Math.floor(Math.random() * 6) + 1;
 
@@ -50,4 +50,25 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
   diceDOM.src = 'assets/dice-' + dice + '.png';
 
   // 3. Update the round score if the rolled number was NOT a 1
+  if (dice > 1) {
+    // Add score
+    roundScore += dice;
+    document.getElementById('current-' + activePlayer).textContent = roundScore;
+  } else {
+    // Next player
+    activePlayer = activePlayer === 1 ? 0 : 1;
+    roundScore = 0;
+
+    // reset the current score boards to 0
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    // toggle active class to change styles on player panel
+    // if class is on it'll be removed else it'll be added
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+
+    // hide dice
+    document.querySelector('.dice').style.display = 'none';
+  }
 });
