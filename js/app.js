@@ -36,6 +36,24 @@ document.getElementById('score-1').textContent = '0';
 document.getElementById('current-0').textContent = '0';
 document.getElementById('current-1').textContent = '0';
 
+function switchPlayer() {
+  // Next player
+  activePlayer = activePlayer === 1 ? 0 : 1;
+  roundScore = 0;
+
+  // reset the current score boards to 0
+  document.getElementById('current-0').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+
+  // toggle active class to change styles on player panel
+  // if class is on it'll be removed else it'll be added
+  document.querySelector('.player-0-panel').classList.toggle('active');
+  document.querySelector('.player-1-panel').classList.toggle('active');
+
+  // hide dice
+  document.querySelector('.dice').style.display = 'none';
+}
+
 // We can also add event listeners to perform functions when they occur
 // the first arg is the type of event
 // the second arg is the callback function that will run when the event happens
@@ -55,20 +73,32 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     roundScore += dice;
     document.getElementById('current-' + activePlayer).textContent = roundScore;
   } else {
-    // Next player
-    activePlayer = activePlayer === 1 ? 0 : 1;
-    roundScore = 0;
+    switchPlayer();
+  }
+});
 
-    // reset the current score boards to 0
-    document.getElementById('current-0').textContent = '0';
-    document.getElementById('current-1').textContent = '0';
+document.querySelector('.btn-hold').addEventListener('click', function () {
+  // Add CURRENT score to global score
+  scores[activePlayer] += roundScore;
 
-    // toggle active class to change styles on player panel
-    // if class is on it'll be removed else it'll be added
-    document.querySelector('.player-0-panel').classList.toggle('active');
-    document.querySelector('.player-1-panel').classList.toggle('active');
+  // update the UI
+  document.querySelector('#score-' + activePlayer).textContent =
+    scores[activePlayer];
 
-    // hide dice
+  //check if player won the game
+  if (scores[activePlayer] >= 100) {
+    //Active player has won the game
+    document.getElementById('name-' + activePlayer).textContent = 'Winner!';
     document.querySelector('.dice').style.display = 'none';
+
+    document
+      .querySelector('.player-' + activePlayer + '-panel')
+      .classList.add('winner');
+    document
+      .querySelector('.player-' + activePlayer + '-panel')
+      .classList.remove('active');
+  } else {
+    //next player
+    switchPlayer();
   }
 });
