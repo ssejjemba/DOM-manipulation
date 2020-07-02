@@ -1,4 +1,11 @@
 # DOM MANIPULATION
 
-This repo contains learners scripts with good comments on the topic of DOM manipulation.
-The scripts are named as per topic and they can easily be loaded by cloning this repository.
+This repo contains a dice game that is aimed at teaching Javascript DOM Manipulation with a clean interface.
+
+GAME RULES:
+
+- The game has 2 players, playing in rounds
+- In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
+- BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
+- The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
+- The first player to reach 100 points on GLOBAL score wins the game
